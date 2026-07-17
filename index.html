@@ -2,11 +2,13 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manus AI Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Gerador de Piadas</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2c3e50">
+    <meta name="theme-color" content="#667eea">
     <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -14,28 +16,36 @@
     <div class="app-container">
         <header>
             <div class="logo">
-                <i class="fas fa-robot"></i>
-                <h1>Manus AI</h1>
+                <i class="fas fa-laugh"></i>
+                <h1>Gerador de Piadas</h1>
             </div>
             <div class="status">
                 <span class="dot"></span> Online
             </div>
         </header>
 
-        <main id="chat-window">
-            <div class="message ai">
-                <div class="avatar"><i class="fas fa-robot"></i></div>
-                <div class="text">Olá! Eu sou sua inteligência artificial. Como posso ajudar você hoje?</div>
+        <main class="joke-container">
+            <div class="joke-display">
+                <div class="joke-type" id="jokeType">Carregando...</div>
+                <div class="joke-text" id="jokeText">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
             </div>
         </main>
 
         <footer>
-            <div class="input-area">
-                <textarea id="user-input" placeholder="Digite sua mensagem..." rows="1"></textarea>
-                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+            <div class="button-area">
+                <button id="newJoke" class="btn-primary">
+                    <i class="fas fa-dice"></i> Nova Piada
+                </button>
+                <button id="shareBtn" class="btn-secondary">
+                    <i class="fas fa-share-alt"></i> Compartilhar
+                </button>
             </div>
         </footer>
     </div>
+
+    <script src="https://capacitor.ionicframework.com/capacitor.js"></script>
     <script src="script.js"></script>
     <script>
         if ('serviceWorker' in navigator) {

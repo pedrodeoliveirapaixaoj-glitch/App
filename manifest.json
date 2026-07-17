@@ -1,17 +1,28 @@
 {
-  "name": "Manus AI Chat",
-  "short_name": "ManusAI",
+  "name": "Gerador de Piadas Aleatórias",
+  "short_name": "Piadas",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#2c3e50",
-  "theme_color": "#2c3e50",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
   "orientation": "portrait",
+  "scope": "./",
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["entertainment"],
+  "screenshots": [
     {
       "src": "icon-512.png",
       "sizes": "512x512",
