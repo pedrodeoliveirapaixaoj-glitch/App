@@ -3,17 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Manus AI - Chat inteligente com IA">
-    <meta name="theme-color" content="#2c3e50">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Manus AI">
-    
     <title>Manus AI Chat</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c3e50">
     <link rel="apple-touch-icon" href="icon-192.png">
-    <link rel="icon" type="image/svg+xml" href="icon.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -23,84 +17,29 @@
                 <i class="fas fa-robot"></i>
                 <h1>Manus AI</h1>
             </div>
-            <div class="header-actions">
-                <button id="theme-toggle" class="icon-btn" title="Alternar tema">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button id="menu-btn" class="icon-btn" title="Menu">
-                    <i class="fas fa-ellipsis-v"></i>
-                </button>
+            <div class="status">
+                <span class="dot"></span> Online
             </div>
         </header>
-
-        <div class="status-bar" id="status-bar">
-            <span class="status-indicator" id="status-indicator"></span>
-            <span id="status-text">Online</span>
-        </div>
-
-        <!-- Menu flutuante -->
-        <div class="menu-dropdown" id="menu-dropdown">
-            <button id="clear-chat"><i class="fas fa-trash"></i> Limpar Chat</button>
-            <button id="export-chat"><i class="fas fa-download"></i> Exportar Chat</button>
-            <button id="about-btn"><i class="fas fa-info-circle"></i> Sobre</button>
-        </div>
-
-        <!-- Modal de informações -->
-        <div class="modal" id="about-modal">
-            <div class="modal-content">
-                <button class="close-btn">&times;</button>
-                <h2>Sobre Manus AI</h2>
-                <p>Versão 2.0 - PWA Melhorada</p>
-                <p>Um assistente de chat inteligente que funciona offline.</p>
-                <p>✨ Funcionalidades:</p>
-                <ul>
-                    <li>💬 Chat em tempo real</li>
-                    <li>📱 Funciona offline</li>
-                    <li>🌙 Tema claro/escuro</li>
-                    <li>💾 Histórico salvo automaticamente</li>
-                    <li>🔔 Notificações push</li>
-                </ul>
-            </div>
-        </div>
 
         <main id="chat-window">
             <div class="message ai">
                 <div class="avatar"><i class="fas fa-robot"></i></div>
                 <div class="text">Olá! Eu sou sua inteligência artificial. Como posso ajudar você hoje?</div>
-                <span class="timestamp">agora</span>
             </div>
         </main>
 
         <footer>
             <div class="input-area">
                 <textarea id="user-input" placeholder="Digite sua mensagem..." rows="1"></textarea>
-                <button id="send-btn" class="send-button"><i class="fas fa-paper-plane"></i></button>
-            </div>
-            <div class="typing-indicator" id="typing-indicator">
-                <span></span><span></span><span></span>
+                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
             </div>
         </footer>
     </div>
-
-    <!-- Notificação de instalação PWA -->
-    <div class="install-prompt" id="install-prompt">
-        <div class="install-content">
-            <h3>📱 Instalar Manus AI</h3>
-            <p>Adicione nosso app à tela inicial!</p>
-            <div class="install-buttons">
-                <button id="install-btn" class="btn-primary">Instalar</button>
-                <button id="dismiss-install" class="btn-secondary">Agora não</button>
-            </div>
-        </div>
-    </div>
-
     <script src="script.js"></script>
-    <script src="pwa-handler.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(err => {
-                console.error('Service Worker registration failed:', err);
-            });
+            navigator.serviceWorker.register('sw.js');
         }
     </script>
 </body>
