@@ -1,0 +1,14 @@
+{
+  "appId": "com.weather.app",
+  "appName": "Previsão do Tempo",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}
