@@ -3,43 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manus AI Chat</title>
+    <title>Manus AI Chat - Inteligência Artificial</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="description" content="Chat com Inteligência Artificial - Manus AI">
     <link rel="apple-touch-icon" href="icon-192.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="app-container">
-        <header>
-            <div class="logo">
-                <i class="fas fa-robot"></i>
-                <h1>Manus AI</h1>
-            </div>
-            <div class="status">
-                <span class="dot"></span> Online
-            </div>
-        </header>
+    <div class="app-wrapper">
+        <div class="app-container">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="header-content">
+                    <div class="logo-section">
+                        <div class="logo-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h1>Manus AI</h1>
+                            <p class="subtitle">Seu Assistente Inteligente</p>
+                        </div>
+                    </div>
+                    <div class="header-actions">
+                        <button id="clear-btn" class="icon-btn" title="Limpar conversa">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button id="theme-btn" class="icon-btn" title="Alternar tema">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="status-bar">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Online</span>
+                </div>
+            </header>
 
-        <main id="chat-window">
-            <div class="message ai">
-                <div class="avatar"><i class="fas fa-robot"></i></div>
-                <div class="text">Olá! Eu sou sua inteligência artificial. Como posso ajudar você hoje?</div>
-            </div>
-        </main>
+            <!-- Chat Window -->
+            <main id="chat-window" class="chat-window">
+                <div class="welcome-message">
+                    <div class="welcome-icon">
+                        <i class="fas fa-sparkles"></i>
+                    </div>
+                    <h2>Bem-vindo ao Manus AI!</h2>
+                    <p>Estou aqui para ajudar com suas perguntas e conversas. Digite uma mensagem para começar.</p>
+                </div>
+            </main>
 
-        <footer>
-            <div class="input-area">
-                <textarea id="user-input" placeholder="Digite sua mensagem..." rows="1"></textarea>
-                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
-            </div>
-        </footer>
+            <!-- Input Area -->
+            <footer class="app-footer">
+                <div class="input-container">
+                    <div class="input-wrapper">
+                        <textarea 
+                            id="user-input" 
+                            class="message-input" 
+                            placeholder="Digite sua mensagem aqui... (Shift + Enter para nova linha)"
+                            rows="1"
+                        ></textarea>
+                        <button id="send-btn" class="send-btn" title="Enviar mensagem">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="input-info">
+                        <small>Powered by Manus AI • <span id="msg-count">0</span> mensagens</small>
+                    </div>
+                </div>
+            </footer>
+        </div>
     </div>
+
+    <!-- Loading Indicator -->
+    <div id="loading-indicator" class="loading-indicator">
+        <div class="spinner"></div>
+    </div>
+
     <script src="script.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
+            navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed:', err));
         }
     </script>
 </body>
