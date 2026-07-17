@@ -1,0 +1,14 @@
+{
+  "appId": "com.jokes.generator",
+  "appName": "Gerador de Piadas",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}
