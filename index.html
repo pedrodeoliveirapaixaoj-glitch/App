@@ -1,90 +1,800 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manus AI Chat - Inteligência Artificial</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/png" href="icon-192.png">
-    <meta name="theme-color" content="#1a1a2e">
-    <meta name="description" content="Chat com Inteligência Artificial - Manus AI">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Potiguar IA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="app-wrapper">
-        <div class="app-container">
-            <!-- Header -->
-            <header class="app-header">
-                <div class="header-content">
-                    <div class="logo-section">
-                        <div class="logo-icon">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <div class="logo-text">
-                            <h1>Manus AI</h1>
-                            <p class="subtitle">Seu Assistente Inteligente</p>
-                        </div>
-                    </div>
-                    <div class="header-actions">
-                        <button id="clear-btn" class="icon-btn" title="Limpar conversa">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                        <button id="theme-btn" class="icon-btn" title="Alternar tema">
-                            <i class="fas fa-moon"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="status-bar">
-                    <span class="status-dot"></span>
-                    <span class="status-text">Online</span>
-                </div>
-            </header>
 
-            <!-- Chat Window -->
-            <main id="chat-window" class="chat-window">
-                <div class="welcome-message">
-                    <div class="welcome-icon">
-                        <i class="fas fa-sparkles"></i>
-                    </div>
-                    <h2>Bem-vindo ao Manus AI!</h2>
-                    <p>Estou aqui para ajudar com suas perguntas e conversas. Digite uma mensagem para começar.</p>
-                </div>
-            </main>
+    <!-- ===== PERMISSIONS SCREEN ===== -->
+    <div class="permissions-screen" id="permissionsScreen">
+        <div class="permissions-container">
+            <div class="permissions-logo">🦞</div>
+            <h1 class="permissions-title">Bem-vindo ao Potiguar IA! 🎉</h1>
+            <p class="permissions-subtitle">Oxe! Que bom te ver por aqui! Antes de começar, preciso de algumas permissões pra funcionar 100% 😄</p>
 
-            <!-- Input Area -->
-            <footer class="app-footer">
-                <div class="input-container">
-                    <div class="input-wrapper">
-                        <textarea 
-                            id="user-input" 
-                            class="message-input" 
-                            placeholder="Digite sua mensagem aqui... (Shift + Enter para nova linha)"
-                            rows="1"
-                        ></textarea>
-                        <button id="send-btn" class="send-btn" title="Enviar mensagem">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
+            <div class="permissions-list">
+                <div class="permission-item" data-perm="camera">
+                    <div class="perm-icon">📷</div>
+                    <div class="perm-info">
+                        <span class="perm-name">Câmera</span>
+                        <span class="perm-desc">Pra tirar fotos e usar a câmera do app</span>
                     </div>
-                    <div class="input-info">
-                        <small>Powered by Manus AI • <span id="msg-count">0</span> mensagens</small>
-                    </div>
+                    <label class="perm-toggle">
+                        <input type="checkbox" checked class="perm-checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
                 </div>
-            </footer>
+
+                <div class="permission-item" data-perm="storage">
+                    <div class="perm-icon">💾</div>
+                    <div class="perm-info">
+                        <span class="perm-name">Armazenamento</span>
+                        <span class="perm-desc">Pra salvar fotos, projetos e dados</span>
+                    </div>
+                    <label class="perm-toggle">
+                        <input type="checkbox" checked class="perm-checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="permission-item" data-perm="notifications">
+                    <div class="perm-icon">🔔</div>
+                    <div class="perm-info">
+                        <span class="perm-name">Notificações</span>
+                        <span class="perm-desc">Pra receber alertas e lembretes</span>
+                    </div>
+                    <label class="perm-toggle">
+                        <input type="checkbox" class="perm-checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="permission-item" data-perm="microphone">
+                    <div class="perm-icon">🎤</div>
+                    <div class="perm-info">
+                        <span class="perm-name">Microfone</span>
+                        <span class="perm-desc">Pra comandos de voz no futuro</span>
+                    </div>
+                    <label class="perm-toggle">
+                        <input type="checkbox" class="perm-checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn-permissions" id="btnAllowPermissions">🚀 Bora lá! Aceitar e Começar</button>
+            <p class="permissions-note">Você pode mudar isso a qualquer momento nas configurações 😉</p>
         </div>
     </div>
 
-    <!-- Loading Indicator -->
-    <div id="loading-indicator" class="loading-indicator">
-        <div class="spinner"></div>
+    <!-- ===== MAIN APP ===== -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">🦞</div>
+                    <span class="logo-text">Potiguar IA</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-section="chat" title="Chat IA">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    <span>🤝 Amigo de Verdade</span>
+                </button>
+                <button class="nav-btn" data-section="futebol" title="Futebol">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
+                    <span>⚽ Futebol</span>
+                </button>
+                <button class="nav-btn" data-section="jogos" title="Jogos">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M6 12h4m-2-2v4m7-1h.01M17 13h.01"></path></svg>
+                    <span>🎮 Jogos</span>
+                </button>
+                <button class="nav-btn" data-section="programacao" title="Programação">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    <span>💻 Programação</span>
+                </button>
+                <button class="nav-btn" data-section="criacao" title="Criação">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+                    <span>✍️ Criação</span>
+                </button>
+                <button class="nav-btn" data-section="culinaria" title="Culinária">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                    <span>🍴 Coisas da Terra</span>
+                </button>
+                <button class="nav-btn" data-section="imagens" title="Imagens">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    <span>🖼️ Imagens</span>
+                </button>
+                <button class="nav-btn" data-section="camera" title="Câmera">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                    <span>📷 Câmera</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">😎</div>
+                    <span class="user-name">Mestre</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+
+            <!-- ===== CHAT / AMIGO DE VERDADE ===== -->
+            <section class="content-section active" id="section-chat">
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="welcome-icon">🦞</div>
+                    <h1 class="welcome-title">Potiguar IA</h1>
+                    <p class="welcome-subtitle">Oxe! Fala tu! 👋 Sou o Potiguar IA, teu camarada de todas as horas! Bora conversar? 🦞</p>
+                    <div class="suggestions">
+                        <button class="suggestion-btn" data-prompt="Me conta uma piada boa!">
+                            <span class="suggestion-icon">😂</span>
+                            <span class="suggestion-text">Conta uma piada boa!</span>
+                        </button>
+                        <button class="suggestion-btn" data-prompt="Me faz uma adivinha">
+                            <span class="suggestion-icon">🤔</span>
+                            <span class="suggestion-text">Faz uma adivinha</span>
+                        </button>
+                        <button class="suggestion-btn" data-prompt="Me dá uma cantada maneiro">
+                            <span class="suggestion-icon">😏</span>
+                            <span class="suggestion-text">Me dá uma cantada</span>
+                        </button>
+                        <button class="suggestion-btn" data-prompt="Quero saber sobre o Flamengo">
+                            <span class="suggestion-icon">🔴⚫</span>
+                            <span class="suggestion-text">Me fala do Flamengo</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-container hidden" id="chatContainer">
+                    <div class="messages" id="messages"></div>
+                    <div class="typing-indicator hidden" id="typingIndicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+
+                <div class="input-area" id="inputArea">
+                    <div class="input-wrapper">
+                        <textarea id="messageInput" class="message-input" placeholder="Fala aí, o que tu quer? 😎" rows="1" maxlength="4000"></textarea>
+                        <button class="btn-send" id="btnSend" disabled>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                    </div>
+                    <p class="input-disclaimer">Potiguar IA é teu parceiro, mas pode errar. Confere aí! 🦞</p>
+                </div>
+            </section>
+
+            <!-- ===== FUTEBOL SECTION ===== -->
+            <section class="content-section" id="section-futebol">
+                <div class="section-header">
+                    <h2>⚽ Área de Futebol</h2>
+                    <p class="section-subtitle">Tudo sobre futebol: Flamengo, Vini Jr, dicas de jogo e quiz! 🏆</p>
+                </div>
+
+                <div class="tabs-futebol">
+                    <button class="tab-btn active" data-tab="futebol-narracao">🎙️ Narração</button>
+                    <button class="tab-btn" data-tab="futebol-flamengo">🔴⚫ Flamengo</button>
+                    <button class="tab-btn" data-tab="futebol-vini">⭐ Vini Júnior</button>
+                    <button class="tab-btn" data-tab="futebol-dicas">🎯 Dicas de Jogo</button>
+                    <button class="tab-btn" data-tab="futebol-quiz">🧩 Quiz de Times</button>
+                </div>
+
+                <!-- Narração -->
+                <div class="tab-content active" id="futebol-narracao">
+                    <div class="narracao-box">
+                        <h3>🎙️ Gerador de Narração de Gol</h3>
+                        <p>Escolhe um time e gera uma narração épica de gol!</p>
+                        <select id="narracaoTime">
+                            <option value="flamengo">Flamengo</option>
+                            <option value="vasco">Vasco</option>
+                            <option value="fluminense">Fluminense</option>
+                            <option value="botafogo">Botafogo</option>
+                            <option value="corinthians">Corinthians</option>
+                            <option value="palmeiras">Palmeiras</option>
+                            <option value="santos">Santos</option>
+                            <option value="brasil">Brasil</option>
+                            <option value="aleatorio">Aleatório</option>
+                        </select>
+                        <button class="btn-action" id="btnGerarNarracao">🎙️ Narrar Gol!</button>
+                        <div class="narracao-result hidden" id="narracaoResult"></div>
+                    </div>
+                </div>
+
+                <!-- Flamengo -->
+                <div class="tab-content" id="futebol-flamengo">
+                    <div class="flamengo-content">
+                        <div class="flamengo-header">
+                            <h3>🔴⚫ Flamengo - O Mais Querido do Brasil</h3>
+                        </div>
+                        <div class="info-cards">
+                            <div class="info-card">
+                                <h4>📅 Fundação</h4>
+                                <p>15 de novembro de 1895</p>
+                            </div>
+                            <div class="info-card">
+                                <h4>🏟️ Estádio</h4>
+                                <p>Maracanã — O templo do futebol!</p>
+                            </div>
+                            <div class="info-card">
+                                <h4>🏆 Libertadores</h4>
+                                <p>3 títulos (1981, 2019, 2022)</p>
+                            </div>
+                            <div class="info-card">
+                                <h4>🌍 Mundial</h4>
+                                <p>1 título (1981) — O ano mágico!</p>
+                            </div>
+                            <div class="info-card">
+                                <h4>⭐ Ídolos</h4>
+                                <p>Zico, Gabigol, Arrascaeta, Pedro, Bruno Henrique</p>
+                            </div>
+                            <div class="info-card">
+                                <h4>🎵 Hino</h4>
+                                <p>"Uma vez Flamengo, sempre Flamengo!"</p>
+                            </div>
+                        </div>
+                        <div class="flamengo-facts">
+                            <h4>🔥 Curiosidades Rubro-Negras</h4>
+                            <ul>
+                                <li>O Flamengo tem mais de 40 milhões de torcedores no Brasil</li>
+                                <li>O gol de Gabigol na final da Libertadores 2019 é considerado o gol mais emocionante da história</li>
+                                <li>Zico é considerado o maior jogador da história do clube</li>
+                                <li>O Mengão tem a maior torcida do Brasil segundo todas as pesquisas</li>
+                                <li>O Flamengo revelou craques como Ronaldo, Vini Jr, e muitos outros!</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vini Júnior -->
+                <div class="tab-content" id="futebol-vini">
+                    <div class="vini-content">
+                        <h3>⭐ Vinícius Júnior — A Estrela Brasileira</h3>
+                        <div class="vini-stats">
+                            <div class="vini-card">
+                                <div class="vini-icon">👤</div>
+                                <h4>Nome Completo</h4>
+                                <p>Vinícius José Paixão de Oliveira Júnior</p>
+                            </div>
+                            <div class="vini-card">
+                                <div class="vini-icon">🎂</div>
+                                <h4>Nascimento</h4>
+                                <p>12 de julho de 2000 — São Gonçalo, RJ</p>
+                            </div>
+                            <div class="vini-card">
+                                <div class="vini-icon">🏟️</div>
+                                <h4>Clube Atual</h4>
+                                <p>Real Madrid (desde 2018)</p>
+                            </div>
+                            <div class="vini-card">
+                                <div class="vini-icon">🏆</div>
+                                <h4>Conquistas</h4>
+                                <p>Bola de Ouro 2024, 2x Champions League, La Liga</p>
+                            </div>
+                            <div class="vini-card">
+                                <div class="vini-icon">🎯</div>
+                                <h4>Estilo</h4>
+                                <p>Velocidade, drible, ousadia — irreverente demais!</p>
+                            </div>
+                            <div class="vini-card">
+                                <div class="vini-icon">🌟</div>
+                                <h4>Curiosidade</h4>
+                                <p>Revelado pelo Flamengo, virou ídolo no Real Madrid e orgulho do Brasil!</p>
+                            </div>
+                        </div>
+                        <div class="vini-quote">
+                            <p>"O Vini é prova de que um moleque da quebrada pode conquistar o mundo com talento e raça!" 🇧🇷</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dicas de Jogo -->
+                <div class="tab-content" id="futebol-dicas">
+                    <div class="dicas-content">
+                        <h3>🎯 Dicas pra Virar Craque</h3>
+                        <div class="dicas-grid">
+                            <div class="dica-card">
+                                <span class="dica-num">1</span>
+                                <h4>🦶 Domínio de Bola</h4>
+                                <p>Treina receber a bola com a parte interna do pé. Quanto mais suave o toque, melhor o controle.</p>
+                            </div>
+                            <div class="dica-card">
+                                <span class="dica-num">2</span>
+                                <h4>👀 Visão de Jogo</h4>
+                                <p>Antes de receber a bola, olha ao redor. Saber onde estão seus companheiros é essencial.</p>
+                            </div>
+                            <div class="dica-card">
+                                <span class="dica-num">3</span>
+                                <h4>🏃 Primeiro Toque</h4>
+                                <p>O segredo não é o drible, é o primeiro toque! Domina a bola pro lado certo e o jogo fica fácil.</p>
+                            </div>
+                            <div class="dica-card">
+                                <span class="dica-num">4</span>
+                                <h4>💪 Força Mental</h4>
+                                <p>Jogadores grandes erram muito. O diferencial é que eles não param de tentar.</p>
+                            </div>
+                            <div class="dica-card">
+                                <span class="dica-num">5</span>
+                                <h4>👥 Jogar em Equipe</h4>
+                                <p>Futebol é coletivo. Passa a bola, chama os amigos, e juntos vocês ganham!</p>
+                            </div>
+                            <div class="dica-card">
+                                <span class="dica-num">6</span>
+                                <h4>🧘 Posicionamento</h4>
+                                <p>Saber onde estar no campo é mais importante que correr muito. Estuda as posições!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz de Times -->
+                <div class="tab-content" id="futebol-quiz">
+                    <div class="quiz-futebol">
+                        <h3>🧩 Quiz de Times Brasileiros</h3>
+                        <div class="quiz-score">
+                            <span>Acertos: <strong id="quizAcertos">0</strong></span>
+                            <span>Erros: <strong id="quizErros">0</strong></span>
+                        </div>
+                        <div class="quiz-container" id="quizFutebolContainer">
+                            <div class="quiz-question" id="quizFutebolQuestion"></div>
+                            <div class="quiz-options" id="quizFutebolOptions"></div>
+                            <div class="quiz-result hidden" id="quizFutebolResult"></div>
+                            <button class="btn-next-quiz hidden" id="btnNextQuizFutebol">Próxima Pergunta →</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== JOGOS SECTION ===== -->
+            <section class="content-section" id="section-jogos">
+                <div class="section-header">
+                    <h2>🎮 Parceiro de Jogos</h2>
+                    <p class="section-subtitle">Dicas de Free Fire, Blox Fruits, Roblox, Fortnite e mais! 🕹️</p>
+                </div>
+
+                <div class="jogos-grid">
+                    <div class="jogo-card">
+                        <div class="jogo-icon">🔥</div>
+                        <h3>Free Fire</h3>
+                        <div class="jogo-dicas">
+                            <h4>Dicas de Ouro:</h4>
+                            <ul>
+                                <li>🎯 Treina mira no modo treino — 15 min por dia faz diferença</li>
+                                <li>🏃 Usa gloo wall como cobertura, não só como parede</li>
+                                <li>📍 Pega sempre a arma que tá no chão (muita gente não sabe)</li>
+                                <li>🔫 Combo ideal: SCAR + MP40 ou AWM + M1887</li>
+                                <li>🏆 No ranked, joga posicionado, não sai correndo pra briga</li>
+                                <li>🎧 Usa fone pra ouvir os passos — é vantagem real!</li>
+                                <li>💡 O mapa Bermuda tem spots secretos — explora!</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="jogo-card">
+                        <div class="jogo-icon">🍎</div>
+                        <h3>Blox Fruits</h3>
+                        <div class="jogo-dicas">
+                            <h4>Truques e Dicas:</h4>
+                            <ul>
+                                <li>⚡ Frutas do tipo Logia são ótimas pra PvP — Dodge natural!</li>
+                                <li>🗡️ Espada de Dragon ou Dark Blade são top tier no PvP</li>
+                                <li>📈 Prioriza Level antes de fruta — stat de dano importa</li>
+                                <li>🏝️ Terceiro mar: foca em Raids pra pegar fruta permanente</li>
+                                <li>💰 Farm de berries: boss raids e NPC hunting são os melhores</li>
+                                <li>🔄 Faz swap de fruta com amigos — frutas raras valem muito!</li>
+                                <li>🔮 Fruta Buddha é a melhor pra grinding — área grande de dano</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="jogo-card">
+                        <div class="jogo-icon">🟢</div>
+                        <h3>Roblox</h3>
+                        <div class="jogos-dicas">
+                            <h4>Dicas para Mandar Bem:</h4>
+                            <ul>
+                                <li>🎮 Adopt Me: troca justa é a regra — nunca aceite pressão pra dar mais</li>
+                                <li>⚔️ Murder Mystery 2: observa padrões dos NPCs pra acertar mais</li>
+                                <li>🏗️ Blox Fruits no Roblox: segue o guia de frutas por raridade</li>
+                                <li>👕 Personaliza teu avatar com itens grátis dos eventos</li>
+                                <li>💡 Entra em grupos — eles dão perks e itens exclusivos</li>
+                                <li>🎁 Códigos promocode: troca de códigos dá itens de graça!</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="jogo-card">
+                        <div class="jogo-icon">🏰</div>
+                        <h3>Fortnite</h3>
+                        <div class="jogo-dicas">
+                            <h4>Dicas de Sobrevivência:</h4>
+                            <ul>
+                                <li>🔧 Edita rápido — pratica no creative mode todo dia</li>
+                                <li>🏗️ Constrói na horizontal primeiro (ramp + wall combo)</li>
+                                <li>📍 Pega posição alta sempre — vantagem de terreno é tudo</li>
+                                <li>🔫 Shotgun close, AR longe — não mistura!</li>
+                                <li>🎒 Leva sempre: escudo, arma curto, arma longo, cura, e sniper</li>
+                                <li>🏃 No storm, não fica parado — move sempre pro próximo cover</li>
+                                <li>💡 O mapa muda a cada temporada — decora os novos POIs!</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== PROGRAMAÇÃO SECTION ===== -->
+            <section class="content-section" id="section-programacao">
+                <div class="section-header">
+                    <h2>💻 Programação Fácil</h2>
+                    <p class="section-subtitle">Códigos prontos, explicação simples, sem complicações! 🚀</p>
+                </div>
+
+                <div class="code-workspace">
+                    <div class="editor-container">
+                        <div class="editor-tabs">
+                            <button class="editor-tab active" data-tab="html">HTML</button>
+                            <button class="editor-tab" data-tab="css">CSS</button>
+                            <button class="editor-tab" data-tab="js">JavaScript</button>
+                        </div>
+                        <div class="editor-body">
+                            <textarea class="code-editor active" id="editor-html" spellcheck="false" placeholder="<!-- Escreve teu HTML aqui! -->
+<h1>Meu site maneiro 🚀</h1>"></textarea>
+                            <textarea class="code-editor" id="editor-css" spellcheck="false" placeholder="/* Teu CSS aqui! */
+h1 { color: #6c5ce7; font-family: Arial; }"></textarea>
+                            <textarea class="code-editor" id="editor-js" spellcheck="false" placeholder="// Teu JavaScript aqui!
+console.log('Bora codar! 🦞');"></textarea>
+                        </div>
+                        <div class="editor-actions">
+                            <button class="btn-run" id="btnRunCode">▶ Executar</button>
+                            <button class="btn-clear" id="btnClearCode">🗑 Limpar</button>
+                        </div>
+                    </div>
+                    <div class="preview-container">
+                        <div class="preview-header">
+                            <span>🔍 Preview</span>
+                            <button class="btn-refresh" id="btnRefreshPreview">↻ Atualizar</button>
+                        </div>
+                        <iframe class="preview-frame" id="previewFrame" sandbox="allow-scripts allow-modals"></iframe>
+                        <div class="preview-console" id="previewConsole">
+                            <div class="console-header">📋 Console</div>
+                            <div class="console-output" id="consoleOutput"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="snippets-section">
+                    <h3>⚡ Exemplos Prontos (clica e vê a mágica!)</h3>
+                    <div class="snippets-grid">
+                        <button class="snippet-btn" data-type="html" data-code="basic">📄 HTML Básico</button>
+                        <button class="snippet-btn" data-type="html" data-code="form">📋 Formulário</button>
+                        <button class="snippet-btn" data-type="css" data-code="flexbox">🎨 Flexbox</button>
+                        <button class="snippet-btn" data-type="css" data-code="animation">✨ Animação</button>
+                        <button class="snippet-btn" data-type="js" data-code="fetch">🌐 Fetch API</button>
+                        <button class="snippet-btn" data-type="js" data-code="dom">🎯 Manipulação DOM</button>
+                        <button class="snippet-btn" data-type="full" data-code="card">🃏 Card Bonito</button>
+                        <button class="snippet-btn" data-type="full" data-code="todo">✅ Todo List</button>
+                        <button class="snippet-btn" data-type="full" data-code="calculator">🧮 Calculadora</button>
+                        <button class="snippet-btn" data-type="full" data-code="game">🎮 Snake Game</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== CRIAÇÃO SECTION ===== -->
+            <section class="content-section" id="section-criacao">
+                <div class="section-header">
+                    <h2>✍️ Criação</h2>
+                    <p class="section-subtitle">Letras de música, rimas, cantadas e prática de letra cursiva! 🎵</p>
+                </div>
+
+                <div class="tabs-criacao">
+                    <button class="tab-btn active" data-tab="criacao-letras">🎵 Letras de Música</button>
+                    <button class="tab-btn" data-tab="criacao-rimas">🔤 Rimas</button>
+                    <button class="tab-btn" data-tab="criacao-cantadas">😏 Cantadas</button>
+                    <button class="tab-btn" data-tab="criacao-cursiva">✏️ Letra Cursiva</button>
+                </div>
+
+                <!-- Letras de Música -->
+                <div class="tab-content active" id="criacao-letras">
+                    <div class="letra-container">
+                        <h3>🎵 Gerador de Letras de Música</h3>
+                        <p>Escolhe um tema e gera uma letra de música no estilo que quiser!</p>
+                        <div class="letra-inputs">
+                            <input type="text" id="letraTema" placeholder="Tema da música (ex: amor, amizade, vida)...">
+                            <select id="letraEstilo">
+                                <option value="sertanejo">Sertanejo</option>
+                                <option value="funk">Funk</option>
+                                <option value="rap">Rap/Hip-Hop</option>
+                                <option value="pop">Pop</option>
+                                <option value="mpb">MPB</option>
+                                <option value="gospel">Gospel</option>
+                            </select>
+                            <button class="btn-action" id="btnGerarLetra">🎵 Gerar Letra</button>
+                        </div>
+                        <div class="letra-result hidden" id="letraResult"></div>
+                    </div>
+                </div>
+
+                <!-- Rimas -->
+                <div class="tab-content" id="criacao-rimas">
+                    <div class="rimas-container">
+                        <h3>🔤 Gerador de Rimas</h3>
+                        <p>Digita uma palavra e descobre rimas perfeitas!</p>
+                        <div class="rimas-inputs">
+                            <input type="text" id="rimaPalavra" placeholder="Digita uma palavra...">
+                            <button class="btn-action" id="btnGerarRimas">🔤 Achá Rimas</button>
+                        </div>
+                        <div class="rimas-result hidden" id="rimasResult"></div>
+                    </div>
+                </div>
+
+                <!-- Cantadas -->
+                <div class="tab-content" id="criacao-cantadas">
+                    <div class="cantadas-container">
+                        <h3>😏 Gerador de Cantadas</h3>
+                        <p>Clica e recebe uma cantada maneiro! (use com responsabilidade 😂)</p>
+                        <button class="btn-action" id="btnGerarCantada">😏 Me Dá Uma Cantada!</button>
+                        <div class="cantada-result hidden" id="cantadaResult"></div>
+                    </div>
+                </div>
+
+                <!-- Letra Cursiva -->
+                <div class="tab-content" id="criacao-cursiva">
+                    <div class="cursiva-container">
+                        <h3>✏️ Prática de Letra Cursiva</h3>
+                        <p>Pratica escrever em letra cursiva com linhas guiadas!</p>
+                        <div class="cursiva-inputs">
+                            <input type="text" id="cursivaTexto" placeholder="Digita o texto pra praticar..." maxlength="50">
+                            <select id="cursivaTamanho">
+                                <option value="small">Pequeno</option>
+                                <option value="medium" selected>Médio</option>
+                                <option value="large">Grande</option>
+                            </select>
+                            <button class="btn-action" id="btnGerarCursiva">✏️ Gerar Prática</button>
+                        </div>
+                        <div class="cursiva-result hidden" id="cursivaResult"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== CULINÁRIA SECTION ===== -->
+            <section class="content-section" id="section-culinaria">
+                <div class="section-header">
+                    <h2>🍴 Coisas da Terra</h2>
+                    <p class="section-subtitle">Receitas fáceis de açaí, leite ninho, comidas típicas do RN e mais! 🍽️</p>
+                </div>
+
+                <div class="culinaria-grid">
+                    <div class="receita-card" id="receita-acai">
+                        <div class="receita-header">🫐</div>
+                        <h3>Açaí Perfeito</h3>
+                        <div class="receita-body">
+                            <h4>Ingredientes:</h4>
+                            <ul>
+                                <li>200g de polpa de açaí</li>
+                                <li>1 banana madura</li>
+                                <li>100ml de leite (ou água)</li>
+                                <li>2 colheres de leite condensado</li>
+                                <li>Granola e frutas pra decorar</li>
+                            </ul>
+                            <h4>Modo de Preparo:</h4>
+                            <ol>
+                                <li>Bate tudo no liquidificador até ficar cremoso</li>
+                                <li>Coloca na tigela</li>
+                                <li>Decora com granola, banana e leite condensado</li>
+                                <li>Se quiser, adiciona morango ou manga!</li>
+                            </ol>
+                            <p class="receita-tip">💡 <strong>Dica Potiguar:</strong> Açaí com tapioca é a combinação perfeita!</p>
+                        </div>
+                    </div>
+
+                    <div class="receita-card" id="receita-leite-ninho">
+                        <div class="receita-header">🥛</div>
+                        <h3>Doce de Leite Ninho</h3>
+                        <div class="receita-body">
+                            <h4>Ingredientes:</h4>
+                            <ul>
+                                <li>1 lata de leite condensado</li>
+                                <li>3 colheres de leite Ninho</li>
+                                <li>1 colher de manteiga</li>
+                            </ul>
+                            <h4>Modo de Preparo:</h4>
+                            <ol>
+                                <li>Mistura tudo numa panela em fogo baixo</li>
+                                <li>Mexe sem parar até engrossar (uns 10 min)</li>
+                                <li>Desliga quando desgrudar da panela</li>
+                                <li>Deixa esfriar e corta em pedaços!</li>
+                            </ol>
+                            <p class="receita-tip">💡 <strong>Dica Potiguar:</strong> Enrola no coco ralado pra ficar mais gostoso!</p>
+                        </div>
+                    </div>
+
+                    <div class="receita-card" id="receita-tapioca">
+                        <div class="receita-header">🫓</div>
+                        <h3>Tapioca Recheada</h3>
+                        <div class="receita-body">
+                            <h4>Ingredientes:</h4>
+                            <ul>
+                                <li>Goma de tapioca (2 colheres)</li>
+                                <li>Queijo coalho fatiado</li>
+                                <li>Ovos mexidos (opcional)</li>
+                                <li>Presunto ou frango desfiado</li>
+                            </ul>
+                            <h4>Modo de Preparo:</h4>
+                            <ol>
+                                <li>Coloca a goma peneirada na frigideira quente</li>
+                                <li>Espera formar a tapioca (2 min)</li>
+                                <li>Vira e coloca o recheio</li>
+                                <li>Dobra ao meio e está pronto!</li>
+                            </ol>
+                            <p class="receita-tip">💡 <strong>Dica Potiguar:</strong> Tapioca com carne de sol é a receita do RN!</p>
+                        </div>
+                    </div>
+
+                    <div class="receita-card" id="receita-carne-sol">
+                        <div class="receita-header">🥩</div>
+                        <h3>Carne de Sol (Típica do RN)</h3>
+                        <div class="receita-body">
+                            <h4>Ingredientes:</h4>
+                            <ul>
+                                <li>500g de carne de sol</li>
+                                <li>1 cebola grande fatiada</li>
+                                <li>Manteiga de garrafa</li>
+                                <li>Leite de coco (100ml)</li>
+                                <li>Coentro fresco</li>
+                            </ul>
+                            <h4>Modo de Preparo:</h4>
+                            <ol>
+                                <li>Dessalga a carne de sol na água por 2 horas</li>
+                                <li>Frite na manteiga de garrafa até dourar</li>
+                                <li>Adiciona o leite de coco e a cebola</li>
+                                <li>Deixa cozinhar por 15 min em fogo baixo</li>
+                                <li>Finaliza com coentro fresco!</li>
+                            </ol>
+                            <p class="receita-tip">💡 <strong>Dica Potiguar:</strong> Acompanha com arroz, feijão e farofa. É comida de verdade!</p>
+                        </div>
+                    </div>
+
+                    <div class="receita-card" id="receita-bolinho">
+                        <div class="receita-header">🧆</div>
+                        <h3>Bolinho de Goma</h3>
+                        <div class="receita-body">
+                            <h4>Ingredientes:</h4>
+                            <ul>
+                                <li>500g de goma de tapioca</li>
+                                <li>200g de carne de sol desfiada</li>
+                                <li>Queijo coalho ralado</li>
+                                <li>Temperos a gosto</li>
+                            </ul>
+                            <h4>Modo de Preparo:</h4>
+                            <ol>
+                                <li>Mistura a goma com água morna até dar liga</li>
+                                <li>Faz bolinhas e recheia com carne de sol e queijo</li>
+                                <li>Frita em óleo quente até dourar</li>
+                                <li>Escorre e serve quente!</li>
+                            </ol>
+                            <p class="receita-tip">💡 <strong>Dica Potiguar:</strong> O bolinho de goma é o salgado mais amado do RN!</p>
+                        </div>
+                    </div>
+
+                    <div class="receita-card" id="receita-cajuzinho">
+                        <div class="receita-header">🍫</div>
+                        <h3>Cajuzinho de Festa</h3>
+                        <div class="receita-body">
+                            <h4>Ingredientes:</h4>
+                            <ul>
+                                <li>1 lata de leite condensado</li>
+                                <li>200g de amendoim torrado e moído</li>
+                                <li>Amendoim inteiro pra decorar</li>
+                            </ul>
+                            <h4>Modo de Preparo:</h4>
+                            <ol>
+                                <li>Mistura o leite condensado com o amendoim moído</li>
+                                <li>Leva ao fogo baixo mexendo sempre</li>
+                                <li>Quando desgrudar da panela, está pronto</li>
+                                <li>Espera esfriar, faz bolinhas e decora com o amendoim!</li>
+                            </ol>
+                            <p class="receita-tip">💡 <strong>Dica Potiguar:</strong> Perfeito pra festa de aniversário — rende uns 30 doces!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== IMAGENS SECTION ===== -->
+            <section class="content-section" id="section-imagens">
+                <div class="section-header">
+                    <h2>🖼️ Imagens</h2>
+                    <p class="section-subtitle">Gere imagens, faça upload e organize sua galeria! 🎨</p>
+                </div>
+                <div class="image-workspace">
+                    <div class="image-generator">
+                        <h3>Gerador de Imagens</h3>
+                        <div class="generator-input">
+                            <textarea id="imagePrompt" placeholder="Descreve a imagem que tu quer (ex: um gato astronauta no espaço)..." rows="3"></textarea>
+                            <div class="generator-options">
+                                <select id="imageSize">
+                                    <option value="512x512">512x512</option>
+                                    <option value="1024x1024" selected>1024x1024</option>
+                                    <option value="1920x1080">1920x1080</option>
+                                </select>
+                                <select id="imageStyle">
+                                    <option value="realistic">Realista</option>
+                                    <option value="artistic">Artístico</option>
+                                    <option value="cartoon">Cartoon</option>
+                                    <option value="pixel">Pixel Art</option>
+                                    <option value="abstract">Abstrato</option>
+                                </select>
+                            </div>
+                            <button class="btn-generate" id="btnGenerateImage">🎨 Gerar Imagem</button>
+                        </div>
+                    </div>
+                    <div class="image-gallery">
+                        <h3>Galeria</h3>
+                        <div class="gallery-grid" id="galleryGrid"></div>
+                        <div class="empty-gallery" id="emptyGallery">
+                            <div class="empty-icon">🖼️</div>
+                            <p>Nenhuma imagem ainda. Gera ou faz upload!</p>
+                        </div>
+                    </div>
+                    <div class="upload-area">
+                        <h3>Upload</h3>
+                        <div class="drop-zone" id="dropZone">
+                            <div class="drop-icon">📤</div>
+                            <p>Arrasta imagens aqui ou clica pra selecionar</p>
+                            <input type="file" id="imageUpload" accept="image/*" multiple hidden>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== CAMERA SECTION ===== -->
+            <section class="content-section" id="section-camera">
+                <div class="section-header">
+                    <h2>📷 Câmera</h2>
+                    <p class="section-subtitle">Tira fotos direto pelo app! 📸</p>
+                </div>
+                <div class="camera-workspace">
+                    <div class="camera-viewport">
+                        <video id="cameraVideo" autoplay playsinline></video>
+                        <canvas id="cameraCanvas" class="hidden"></canvas>
+                        <div class="camera-overlay hidden" id="cameraOverlay">
+                            <p>Câmera indisponível 😕</p>
+                            <span>Permite o acesso à câmera nas configurações</span>
+                        </div>
+                    </div>
+                    <div class="camera-controls">
+                        <button class="btn-camera-action" id="btnStartCamera">▶ Ligar Câmera</button>
+                        <button class="btn-capture hidden" id="btnCapture">📸</button>
+                        <button class="btn-camera-action hidden" id="btnSwitchCamera">🔄 Trocar</button>
+                    </div>
+                    <div class="photo-gallery">
+                        <h3>Fotos Capturadas</h3>
+                        <div class="photos-grid" id="photosGrid"></div>
+                        <div class="empty-photos" id="emptyPhotos">
+                            <div class="empty-icon">📷</div>
+                            <p>Nenhuma foto ainda. Liga a câmera e tira uma!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 
-    <script src="script.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed:', err));
-        }
-    </script>
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle hidden" id="menuToggle">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+
+    <script src="app.js"></script>
 </body>
 </html>
